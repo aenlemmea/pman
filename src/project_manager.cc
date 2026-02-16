@@ -51,6 +51,7 @@ Project ProjectManager::create(std::string_view name, Language lang,
     throw std::runtime_error("Duplicate project");
 
   auto fp = repo.get_repo_root_path() / name;
+
   if (std::filesystem::exists(fp))
     throw std::runtime_error("Project already exists @ " +
                              repo.get_repo_root_path().string());

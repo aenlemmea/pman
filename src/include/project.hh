@@ -7,6 +7,7 @@
 #include <filesystem>
 #include <nlohmann/json.hpp>
 #include <nlohmann/json_fwd.hpp>
+#include <ostream>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -96,6 +97,8 @@ public:
   bool operator==(const Project &p) const {
     return (name == p.name && p.proj_path == proj_path);
   }
+
+  friend std::ostream &operator<<(std::ostream &os, const Project &proj);
 };
 }; // namespace pman
 

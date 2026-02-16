@@ -3,6 +3,7 @@
 #include <ctime>
 #include <filesystem>
 #include <nlohmann/json_fwd.hpp>
+#include <ostream>
 
 namespace pman {
 void to_json(nlohmann::json &j, const Project &p) {
@@ -28,5 +29,54 @@ void from_json(const nlohmann::json &j, Project &p) {
   auto pz = j.at("proj_path").get<std::string>();
   p.proj_path = std::filesystem::path{pz};
   j.at("description").get_to(p.description);
+}
+
+std::ostream &operator<<(std::ostream &os, const Project &proj) {
+  os << "Name: " << proj.name << "\nDescription: " << proj.description
+     << "\nStatus: " <<
+      [&]() {
+        switch (proj.status) {
+        case Status::PLANNED:
+          return "PLANNED";
+        case Status::START:
+          return "START";
+        case Status::ABANDONED:
+          return "ABANDONED";
+        case Status::DONE_ARCHIVED:
+          return "DONE_ARCHIVED";
+        case Status::POLISH:
+          return "POLISH";
+        case Status::DONE:
+          return "DONE";
+        }
+        return "Unknown";
+      }()
+     << "\nLanguage: " <<
+      [&]() {
+        switch (proj.language) {
+        case Language::C:
+          return "C";
+        case Language::CPP:
+          return "C++";
+        case Language::RUST:
+          return "Rust";
+        case Language::GO:
+          return "Go";
+        case Language::PYTHON:
+          return "Python";
+        case Language::SCRIPT:
+          return "Scripting";
+        case Language::UNKNOWN:
+          return "Unknown";
+        }
+        return "Unknown";
+      }()
+     << "\nCreated At: " << std::format("{:%Y-%m-%d %H:%M:%S}", proj.created_at)
+     << "\nProject Path: " << proj.proj_path
+     << "\nGit Remote: " << proj.git_remote << "\nLinks: " << "[\n";
+  for (const auto &item : proj.links)
+    os << item << "\n";
+  os << "\n]";
+  return os;
 }
 }; // namespace pman
