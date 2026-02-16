@@ -22,3 +22,4 @@ __cache__/
 .env
 
 NOTES.md
+compile_commands.json

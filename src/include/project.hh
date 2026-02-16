@@ -81,6 +81,8 @@ public:
 
   std::string_view get_name() const noexcept { return name; }
   const auto &get_path() const { return proj_path; }
+  const Status &get_status() const noexcept { return status; }
+  const std::vector<std::string> &get_links() const noexcept { return links; }
 
   void update_name(std::string_view new_name) { name = new_name; }
   void update_status(Status st) { status = st; }

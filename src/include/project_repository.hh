@@ -9,14 +9,20 @@ namespace pman {
 
 class ProjectRepository {
 
-  static constexpr std::string_view repo_name{".pman"};
+  std::string_view repo_name{".pman"};
   std::filesystem::path repository_path;
 
 public:
-  explicit ProjectRepository(const std::filesystem::path &root);
+  explicit ProjectRepository(const std::filesystem::path &repo_root);
+  explicit ProjectRepository(const std::filesystem::path &repo_root,
+                             const std::string_view repo_name_ov);
 
-  const std::filesystem::path get_path() const noexcept {
+  const std::filesystem::path get_repo_path() const noexcept {
     return repository_path / repo_name;
+  }
+
+  const std::filesystem::path get_repo_root_path() const noexcept {
+    return repository_path;
   }
 
   void save(const Project &proj);
