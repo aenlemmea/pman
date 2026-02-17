@@ -10,6 +10,7 @@ add_library(pman_lib
 			src/project.cc
 			src/project_manager.cc
 			src/ui_components.cc
+			src/main_control.cc
 )
 target_include_directories(pman_lib PUBLIC ${CMAKE_SOURCE_DIR}/src/include/)
 

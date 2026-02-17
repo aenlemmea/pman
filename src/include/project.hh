@@ -1,3 +1,4 @@
+
 // A Project Record
 #ifndef PMAN_PROJECT_HH
 #define PMAN_PROJECT_HH
@@ -84,6 +85,26 @@ public:
   const auto &get_path() const { return proj_path; }
   const Status &get_status() const noexcept { return status; }
   const std::vector<std::string> &get_links() const noexcept { return links; }
+  static Language language_from_string(std::string_view s) {
+    std::string tmp(s);
+    std::transform(tmp.begin(), tmp.end(), tmp.begin(),
+                   [](unsigned char c) { return std::toupper(c); });
+
+    if (tmp == "C++")
+      return Language::CPP;
+    if (tmp == "GO")
+      return Language::GO;
+    if (tmp == "C")
+      return Language::C;
+    if (tmp == "RUST")
+      return Language::RUST;
+    if (tmp == "PYTHON")
+      return Language::PYTHON;
+    if (tmp == "SCRIPTING")
+      return Language::SCRIPT;
+
+    return Language::UNKNOWN;
+  }
 
   void update_name(std::string_view new_name) { name = new_name; }
   void update_status(Status st) { status = st; }
